@@ -1,18 +1,17 @@
 <resources>
     <string name="app_name">Events</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login">Login</string>
 
-    <string name="enter">Ingresar</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
 
-    <string name="error_email">Ingrese un email correcto</string>
-    <string name="error_password">Contraseña incorrecta (mínimo 6 caracteres)</string>
-    <string name="error">Ocurrió un error</string>
-    <string name="message_register">Registrado correctamente</string>
-    <string name="message_account">No tengo cuenta</string>
-    <string name="title_activity_register">RegisterActivity</string>
-    <string name="wait_please">Espere por favor&#8230;</string>
+    <string name="error_email">Enter a correct email</string>
+    <string name="error_password">Incorrect password (minimum 6 characters)</string>
+    <string name="error">An error occurred</string>
+    <string name="message_register">Registered Successfully</string>
+    <string name="message_account">I do not have an account</string>
+    <string name="title_activity_register">Register</string>
+    <string name="wait_please">Please wait&#8230;</string>
 
 </resources>

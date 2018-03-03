@@ -2,18 +2,22 @@ package com.rba.events.register;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
+import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.rba.events.R;
 import com.rba.events.base.BaseActivity;
 import com.rba.events.login.LoginRegisterView;
+import com.rba.events.util.UiUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 
 /**
@@ -34,6 +38,8 @@ public class RegisterActivity extends BaseActivity implements LoginRegisterView 
     AppCompatEditText etEmail;
     @BindView(R.id.ll_register)
     LinearLayout llRegister;
+    @BindView(R.id.btn_enter)
+    AppCompatButton btnEnter;
     private RegisterPresenter registerPresenter;
 
     @Override
@@ -56,6 +62,7 @@ public class RegisterActivity extends BaseActivity implements LoginRegisterView 
         registerPresenter = new RegisterPresenter();
         registerPresenter.attach(this);
         firebaseAuth = FirebaseAuth.getInstance();
+        btnEnter.setText(R.string.title_activity_register);
     }
 
     @Override
@@ -117,6 +124,18 @@ public class RegisterActivity extends BaseActivity implements LoginRegisterView 
         }
     }
 
+    @OnEditorAction(R.id.et_password)
+    boolean onPasswordEditorAction(int actionId) {
+
+        if(actionId == EditorInfo.IME_ACTION_GO){
+            UiUtil.hideKeyboard(this, etPassword);
+            validData();
+            return true;
+        }
+
+        return false;
+    }
+
     @Override
     public void onResponse() {
         showSnackBar(llRegister, getString(R.string.message_register));
@@ -132,7 +151,7 @@ public class RegisterActivity extends BaseActivity implements LoginRegisterView 
         showSnackBar(llRegister, getString(R.string.error));
     }
 
-    @OnClick(R.id.btn_login)
+    @OnClick(R.id.btn_enter)
     void onClickLogin() {
         validData();
     }

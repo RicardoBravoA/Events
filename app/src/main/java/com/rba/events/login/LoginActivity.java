@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -12,10 +14,12 @@ import com.rba.events.MainActivity;
 import com.rba.events.R;
 import com.rba.events.base.BaseActivity;
 import com.rba.events.register.RegisterActivity;
+import com.rba.events.util.UiUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 
 /**
@@ -116,6 +120,18 @@ public class LoginActivity extends BaseActivity implements LoginRegisterView {
         }
     }
 
+    @OnEditorAction(R.id.et_password)
+    boolean onPasswordEditorAction(int actionId) {
+
+        if(actionId == EditorInfo.IME_ACTION_GO){
+            UiUtil.hideKeyboard(this, etPassword);
+            validData();
+            return true;
+        }
+
+        return false;
+    }
+
     @Override
     public void onResponse() {
         startActivity(new Intent(this, MainActivity.class));
@@ -132,7 +148,7 @@ public class LoginActivity extends BaseActivity implements LoginRegisterView {
         showSnackBar(llLogin, getString(R.string.error));
     }
 
-    @OnClick(R.id.btn_login)
+    @OnClick(R.id.btn_enter)
     void onClickLogin() {
         validData();
     }
