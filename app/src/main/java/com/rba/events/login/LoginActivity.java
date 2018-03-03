@@ -133,4 +133,9 @@ public class LoginActivity extends BaseActivity implements LoginView {
         startActivity(new Intent(this, RegisterActivity.class));
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        loginPresenter.detach();
+    }
 }
