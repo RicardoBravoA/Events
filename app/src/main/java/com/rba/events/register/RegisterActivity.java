@@ -1,32 +1,145 @@
 package com.rba.events.register;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.widget.LinearLayout;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.rba.events.R;
 import com.rba.events.base.BaseActivity;
+import com.rba.events.login.LoginRegisterView;
 
-public class RegisterActivity extends BaseActivity {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnTextChanged;
+
+/**
+ * Created by Ricardo Bravo on 2/03/18.
+ */
+
+public class RegisterActivity extends BaseActivity implements LoginRegisterView {
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.til_password)
+    TextInputLayout tilPassword;
+    @BindView(R.id.et_password)
+    AppCompatEditText etPassword;
+    @BindView(R.id.til_email)
+    TextInputLayout tilEmail;
+    @BindView(R.id.et_email)
+    AppCompatEditText etEmail;
+    @BindView(R.id.ll_register)
+    LinearLayout llRegister;
+    private RegisterPresenter registerPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        init();
     }
 
+    @Override
+    public void init() {
+        ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        registerPresenter = new RegisterPresenter();
+        registerPresenter.attach(this);
+        firebaseAuth = FirebaseAuth.getInstance();
+    }
+
+    @Override
+    public void showErrorEmail() {
+        tilEmail.setErrorEnabled(true);
+        tilEmail.setError(getString(R.string.error_email));
+        requestFocus(etEmail);
+    }
+
+    @Override
+    public void showErrorPassword() {
+        tilPassword.setErrorEnabled(true);
+        tilPassword.setError(getString(R.string.error_password));
+        requestFocus(etPassword);
+    }
+
+    @Override
+    public void hideErrorEmail() {
+        if (tilEmail.isErrorEnabled()) {
+            tilEmail.setErrorEnabled(false);
+        }
+    }
+
+    @Override
+    public void hideErrorPassword() {
+        if (tilPassword.isErrorEnabled()) {
+            tilPassword.setErrorEnabled(false);
+        }
+    }
+
+    @Override
+    public void validData() {
+        String email = etEmail.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
+
+        if (!registerPresenter.validEmail(email)) {
+            return;
+        }
+
+        if (!registerPresenter.validPassword(password)) {
+            return;
+        }
+
+        registerPresenter.register(firebaseAuth, email, password);
+
+    }
+
+    @OnTextChanged(R.id.et_email)
+    void onEmailTextChanged() {
+        if (tilEmail.isErrorEnabled()) {
+            tilEmail.setErrorEnabled(false);
+        }
+    }
+
+    @OnTextChanged(R.id.et_password)
+    void onPasswordTextChanged() {
+        if (tilPassword.isErrorEnabled()) {
+            tilPassword.setErrorEnabled(false);
+        }
+    }
+
+    @Override
+    public void onResponse() {
+        showSnackBar(llRegister, getString(R.string.message_register));
+    }
+
+    @Override
+    public void onError(String error) {
+        showSnackBar(llRegister, error);
+    }
+
+    @Override
+    public void onFailure() {
+        showSnackBar(llRegister, getString(R.string.error));
+    }
+
+    @OnClick(R.id.btn_login)
+    void onClickLogin() {
+        validData();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        registerPresenter.detach();
+    }
 }

@@ -33,7 +33,11 @@
             android:name=".register.RegisterActivity"
             android:label="@string/title_activity_register"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".login.LoginActivity">
+            </meta-data>
+        </activity>
     </application>
 
 </manifest>

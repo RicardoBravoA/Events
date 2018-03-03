@@ -4,7 +4,7 @@ package com.rba.events.login;
  * Created by Ricardo Bravo on 2/03/18.
  */
 
-public interface LoginView {
+public interface LoginRegisterView {
 
 
     void init();
@@ -21,10 +21,12 @@ public interface LoginView {
 
     void hideLoading();
 
-    void login();
+    void validData();
 
     void onResponse();
 
-    void onError();
+    void onError(String error);
+
+    void onFailure();
 
 }

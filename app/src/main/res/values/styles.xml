@@ -20,7 +20,7 @@
     <style name="Register">
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/register</item>
-        <item name="android:padding">5dp</item>
+        <item name="android:padding">8dp</item>
         <item name="android:background">?selectableItemBackground</item>
     </style>
 

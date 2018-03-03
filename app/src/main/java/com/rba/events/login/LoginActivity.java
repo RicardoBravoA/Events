@@ -18,7 +18,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
-public class LoginActivity extends BaseActivity implements LoginView {
+/**
+ * Created by Ricardo Bravo on 2/03/18.
+ */
+
+public class LoginActivity extends BaseActivity implements LoginRegisterView {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -32,7 +36,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     AppCompatEditText etEmail;
     @BindView(R.id.ll_login)
     LinearLayout llLogin;
-    private LoginPresenter loginPresenter;
+    private LoginRegisterPresenter loginRegisterPresenter;
     private FirebaseAuth firebaseAuth;
 
     @Override
@@ -48,8 +52,8 @@ public class LoginActivity extends BaseActivity implements LoginView {
     public void init() {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        loginPresenter = new LoginPresenter();
-        loginPresenter.attach(this);
+        loginRegisterPresenter = new LoginRegisterPresenter();
+        loginRegisterPresenter.attach(this);
         firebaseAuth = FirebaseAuth.getInstance();
     }
 
@@ -82,19 +86,19 @@ public class LoginActivity extends BaseActivity implements LoginView {
     }
 
     @Override
-    public void login() {
+    public void validData() {
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
-        if (!loginPresenter.validEmail(email)) {
+        if (!loginRegisterPresenter.validEmail(email)) {
             return;
         }
 
-        if (!loginPresenter.validPassword(password)) {
+        if (!loginRegisterPresenter.validPassword(password)) {
             return;
         }
 
-        loginPresenter.login(firebaseAuth, email, password);
+        loginRegisterPresenter.login(firebaseAuth, email, password);
 
     }
 
@@ -115,17 +119,22 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @Override
     public void onResponse() {
         startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
     @Override
-    public void onError() {
+    public void onError(String error) {
+        showSnackBar(llLogin, error);
+    }
+
+    @Override
+    public void onFailure() {
         showSnackBar(llLogin, getString(R.string.error));
     }
 
-
     @OnClick(R.id.btn_login)
     void onClickLogin() {
-        login();
+        validData();
     }
 
     @OnClick(R.id.tv_register)
@@ -136,6 +145,6 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        loginPresenter.detach();
+        loginRegisterPresenter.detach();
     }
 }

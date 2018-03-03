@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.rba.events.R;
 
 /**
@@ -15,6 +16,7 @@ import com.rba.events.R;
 public class BaseActivity extends AppCompatActivity {
 
     private AlertDialog alertDialog = null;
+    public FirebaseAuth firebaseAuth;
 
     public void requestFocus(View view) {
         if (view.requestFocus()) {

@@ -1,21 +1,24 @@
-package com.rba.events.login;
+package com.rba.events.register;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.Gson;
+import com.rba.events.login.LoginRegisterCallback;
 
 /**
  * Created by Ricardo Bravo on 2/03/18.
  */
 
-class LoginInteractor {
+class RegisterInteractor {
 
-    static void onLogin(FirebaseAuth firebaseAuth, String email, String password,
-                               final LoginRegisterCallback loginRegisterCallback) {
-        firebaseAuth.signInWithEmailAndPassword(email, password)
+    static void onRegister(FirebaseAuth firebaseAuth, String email, String password,
+                           final LoginRegisterCallback loginRegisterCallback) {
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
