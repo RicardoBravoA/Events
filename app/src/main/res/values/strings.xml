@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Events</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_login">LoginActivity</string>
+
+    <string name="enter">Ingresar</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+
+    <string name="error_email">Ingrese un email correcto</string>
+    <string name="error_password">Contraseña incorrecta (mínimo 6 caracteres)</string>
+    <string name="error">Ocurrió un error</string>
+    <string name="message_account">No tengo cuenta</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="wait_please">Espere por favor&#8230;</string>
+
+</resources>

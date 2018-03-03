@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "62117193491",
+    "firebase_url": "https://events-b613f.firebaseio.com",
+    "project_id": "events-b613f",
+    "storage_bucket": "events-b613f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:62117193491:android:3db7c12cd29a0306",
+        "android_client_info": {
+          "package_name": "com.rba.events"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "62117193491-gnb7lo315f95alu11tqdud296t0qu87g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8zqhnpLnpKsK4GkVqaLL7Qed15mROjMc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
