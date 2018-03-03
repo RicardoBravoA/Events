@@ -6,11 +6,10 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
 import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.rba.events.MainActivity;
+import com.rba.events.main.MainActivity;
 import com.rba.events.R;
 import com.rba.events.base.BaseActivity;
 import com.rba.events.register.RegisterActivity;
@@ -37,7 +36,7 @@ public class LoginActivity extends BaseActivity implements LoginRegisterView {
     @BindView(R.id.til_email)
     TextInputLayout tilEmail;
     @BindView(R.id.et_email)
-    AppCompatEditText etEmail;
+    public AppCompatEditText etEmail;
     @BindView(R.id.ll_login)
     LinearLayout llLogin;
     private LoginRegisterPresenter loginRegisterPresenter;

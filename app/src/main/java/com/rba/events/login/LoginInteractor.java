@@ -11,9 +11,9 @@ import com.google.firebase.auth.FirebaseAuth;
  * Created by Ricardo Bravo on 2/03/18.
  */
 
-class LoginInteractor {
+public class LoginInteractor {
 
-    static void onLogin(FirebaseAuth firebaseAuth, String email, String password,
+    public static void onLogin(FirebaseAuth firebaseAuth, String email, String password,
                                final LoginRegisterCallback loginRegisterCallback) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
