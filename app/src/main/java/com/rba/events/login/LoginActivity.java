@@ -110,15 +110,9 @@ public class LoginActivity extends BaseActivity implements LoginRegisterView {
             return;
         }
 
-        loginRegisterPresenter.login(firebaseAuth, email, password);
-
-    }
-
-    @Override
-    public void validSession(boolean session) {
-        if (session) {
-            nextActivity();
-        } else if(!NetworkUtil.isOnline(this)){
+        if (NetworkUtil.isOnline(this)) {
+            loginRegisterPresenter.login(firebaseAuth, email, password);
+        } else {
             showInternetMessage();
         }
 
@@ -170,7 +164,8 @@ public class LoginActivity extends BaseActivity implements LoginRegisterView {
 
     }
 
-    void nextActivity() {
+    @Override
+    public void nextActivity() {
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }
@@ -192,13 +187,7 @@ public class LoginActivity extends BaseActivity implements LoginRegisterView {
 
     @OnClick(R.id.btn_enter)
     void onClickLogin() {
-
-        if (NetworkUtil.isOnline(this)) {
-            validData();
-        } else {
-            loginRegisterPresenter.validSession(this, firebaseAuth.getUid());
-        }
-
+        validData();
     }
 
     @OnClick(R.id.tv_register)

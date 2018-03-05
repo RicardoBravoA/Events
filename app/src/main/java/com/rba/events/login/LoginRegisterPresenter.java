@@ -46,7 +46,9 @@ public class LoginRegisterPresenter implements BasePresenter<LoginRegisterView>,
     }
 
     void validSession(Context context, String uid) {
-        loginRegisterView.validSession(LoginInteractor.isSession(context, uid));
+        if (LoginInteractor.isSession(context, uid)) {
+            loginRegisterView.nextActivity();
+        }
     }
 
     void addSession(Context context, UserEntity userEntity) {

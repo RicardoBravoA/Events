@@ -22,8 +22,6 @@ public interface LoginRegisterView {
 
     void validData();
 
-    void validSession(boolean session);
-
     void onResponse();
 
     void onError(String error);
@@ -31,5 +29,7 @@ public interface LoginRegisterView {
     void onFailure();
 
     void showInternetMessage();
+
+    void nextActivity();
 
 }

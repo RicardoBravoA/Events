@@ -113,13 +113,12 @@ public class RegisterActivity extends BaseActivity implements LoginRegisterView 
             return;
         }
 
-        registerPresenter.register(firebaseAuth, email, password);
+        if (NetworkUtil.isOnline(this)) {
+            registerPresenter.register(firebaseAuth, email, password);
+        } else {
+            showInternetMessage();
+        }
 
-    }
-
-    @Override
-    public void validSession(boolean session) {
-        // Only for login
     }
 
     @OnTextChanged(R.id.et_email)
@@ -168,13 +167,14 @@ public class RegisterActivity extends BaseActivity implements LoginRegisterView 
         showSnackBar(llRegister, getString(R.string.message_internet));
     }
 
+    @Override
+    public void nextActivity() {
+        //Only for login
+    }
+
     @OnClick(R.id.btn_enter)
     void onClickLogin() {
-        if (NetworkUtil.isOnline(this)) {
-            validData();
-        } else {
-            showInternetMessage();
-        }
+        validData();
 
     }
 

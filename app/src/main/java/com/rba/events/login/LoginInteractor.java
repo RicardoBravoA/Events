@@ -52,5 +52,4 @@ class LoginInteractor {
         return userTable.validUser(uid);
     }
 
-
 }
