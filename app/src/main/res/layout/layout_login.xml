@@ -21,7 +21,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
-            android:text="ricardo@gmail.com"
             android:inputType="textEmailAddress"
             android:imeOptions="actionNext"/>
 
@@ -38,7 +37,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
-            android:text="123456"
             android:inputType="textPassword"
             android:imeOptions="actionGo"/>
 
