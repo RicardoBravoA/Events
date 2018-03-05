@@ -9,9 +9,11 @@
     <string name="error_email">Enter a correct email</string>
     <string name="error_password">Incorrect password (minimum 6 characters)</string>
     <string name="error">An error occurred</string>
+    <string name="remember_session">Remember session</string>
     <string name="message_register">Registered Successfully</string>
     <string name="message_account">I do not have an account</string>
     <string name="title_activity_register">Register</string>
     <string name="wait_please">Please wait&#8230;</string>
+    <string name="message_internet">Check your internet connection</string>
 
 </resources>

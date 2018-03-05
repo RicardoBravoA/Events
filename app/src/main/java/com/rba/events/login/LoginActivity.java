@@ -3,8 +3,10 @@ package com.rba.events.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
 
@@ -12,7 +14,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.rba.events.main.MainActivity;
 import com.rba.events.R;
 import com.rba.events.base.BaseActivity;
+import com.rba.events.model.entity.UserEntity;
 import com.rba.events.register.RegisterActivity;
+import com.rba.events.util.NetworkUtil;
 import com.rba.events.util.UiUtil;
 
 import butterknife.BindView;
@@ -39,6 +43,8 @@ public class LoginActivity extends BaseActivity implements LoginRegisterView {
     public AppCompatEditText etEmail;
     @BindView(R.id.ll_login)
     LinearLayout llLogin;
+    @BindView(R.id.cb_remember)
+    AppCompatCheckBox cbRemember;
     private LoginRegisterPresenter loginRegisterPresenter;
     private FirebaseAuth firebaseAuth;
 
@@ -58,6 +64,10 @@ public class LoginActivity extends BaseActivity implements LoginRegisterView {
         loginRegisterPresenter = new LoginRegisterPresenter();
         loginRegisterPresenter.attach(this);
         firebaseAuth = FirebaseAuth.getInstance();
+
+        loginRegisterPresenter.validSession(this, firebaseAuth.getUid());
+
+
     }
 
     @Override
@@ -105,6 +115,16 @@ public class LoginActivity extends BaseActivity implements LoginRegisterView {
 
     }
 
+    @Override
+    public void validSession(boolean session) {
+        if (session) {
+            nextActivity();
+        } else {
+            showSnackBar(llLogin, getString(R.string.message_internet));
+        }
+
+    }
+
     @OnTextChanged(R.id.et_email)
     void onEmailTextChanged() {
         if (tilEmail.isErrorEnabled()) {
@@ -122,7 +142,7 @@ public class LoginActivity extends BaseActivity implements LoginRegisterView {
     @OnEditorAction(R.id.et_password)
     boolean onPasswordEditorAction(int actionId) {
 
-        if(actionId == EditorInfo.IME_ACTION_GO){
+        if (actionId == EditorInfo.IME_ACTION_GO) {
             UiUtil.hideKeyboard(this, etPassword);
             validData();
             return true;
@@ -133,6 +153,25 @@ public class LoginActivity extends BaseActivity implements LoginRegisterView {
 
     @Override
     public void onResponse() {
+
+        if (cbRemember.isChecked()) {
+            UserEntity userEntity = new UserEntity();
+
+            if (firebaseAuth.getCurrentUser() != null) {
+                userEntity.setEmail(firebaseAuth.getCurrentUser().getEmail());
+            }
+
+            userEntity.setUid(firebaseAuth.getUid());
+            loginRegisterPresenter.addSession(this, userEntity);
+        } else {
+            loginRegisterPresenter.deleteSession(this);
+        }
+
+        nextActivity();
+
+    }
+
+    public void nextActivity() {
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }
@@ -149,7 +188,13 @@ public class LoginActivity extends BaseActivity implements LoginRegisterView {
 
     @OnClick(R.id.btn_enter)
     void onClickLogin() {
-        validData();
+
+        if (NetworkUtil.isOnline(this)) {
+            validData();
+        } else {
+            loginRegisterPresenter.validSession(this, firebaseAuth.getUid());
+        }
+
     }
 
     @OnClick(R.id.tv_register)

@@ -1,7 +1,10 @@
 package com.rba.events.login;
 
+import android.content.Context;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.rba.events.base.BasePresenter;
+import com.rba.events.model.entity.UserEntity;
 import com.rba.events.util.UiUtil;
 
 /**
@@ -40,6 +43,18 @@ public class LoginRegisterPresenter implements BasePresenter<LoginRegisterView>,
     void login(FirebaseAuth firebaseAuth, String email, String password) {
         loginRegisterView.showLoading();
         LoginInteractor.onLogin(firebaseAuth, email, password, this);
+    }
+
+    void validSession(Context context, String uid) {
+        loginRegisterView.validSession(LoginInteractor.isSession(context, uid));
+    }
+
+    void addSession(Context context, UserEntity userEntity) {
+        LoginInteractor.addSession(context, userEntity);
+    }
+
+    void deleteSession(Context context) {
+        LoginInteractor.deleteSession(context);
     }
 
     @Override

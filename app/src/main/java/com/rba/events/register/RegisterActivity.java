@@ -3,6 +3,7 @@ package com.rba.events.register;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
 import android.view.inputmethod.EditorInfo;
@@ -19,6 +20,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
+
+import static android.view.View.GONE;
 
 /**
  * Created by Ricardo Bravo on 2/03/18.
@@ -40,6 +43,8 @@ public class RegisterActivity extends BaseActivity implements LoginRegisterView 
     LinearLayout llRegister;
     @BindView(R.id.btn_enter)
     AppCompatButton btnEnter;
+    @BindView(R.id.cb_remember)
+    AppCompatCheckBox cbRemember;
     private RegisterPresenter registerPresenter;
 
     @Override
@@ -63,6 +68,7 @@ public class RegisterActivity extends BaseActivity implements LoginRegisterView 
         registerPresenter.attach(this);
         firebaseAuth = FirebaseAuth.getInstance();
         btnEnter.setText(R.string.title_activity_register);
+        cbRemember.setVisibility(GONE);
     }
 
     @Override
@@ -108,6 +114,11 @@ public class RegisterActivity extends BaseActivity implements LoginRegisterView 
 
         registerPresenter.register(firebaseAuth, email, password);
 
+    }
+
+    @Override
+    public void validSession(boolean session) {
+        // Only for login
     }
 
     @OnTextChanged(R.id.et_email)

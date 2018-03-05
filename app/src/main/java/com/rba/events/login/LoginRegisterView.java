@@ -6,7 +6,6 @@ package com.rba.events.login;
 
 public interface LoginRegisterView {
 
-
     void init();
 
     void showErrorEmail();
@@ -22,6 +21,8 @@ public interface LoginRegisterView {
     void hideLoading();
 
     void validData();
+
+    void validSession(boolean session);
 
     void onResponse();
 
