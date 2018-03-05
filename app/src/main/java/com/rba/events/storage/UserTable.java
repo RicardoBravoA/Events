@@ -13,7 +13,7 @@ import com.rba.events.model.entity.UserEntity;
 
 public class UserTable extends DatabaseHandler {
 
-    private DatabaseHandler databaseHelper;
+    private final DatabaseHandler databaseHelper;
 
     public UserTable(Context context) {
         super(context);

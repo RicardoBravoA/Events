@@ -6,8 +6,8 @@ package com.rba.events.model.entity;
 
 public class UserEntity {
 
-    String uid;
-    String email;
+    private String uid;
+    private String email;
 
     public String getUid() {
         return uid;

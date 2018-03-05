@@ -13,7 +13,11 @@ public class NetworkUtil {
     public static boolean isOnline(Context context) {
         ConnectivityManager connectivityManager =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = connectivityManager.getActiveNetworkInfo();
+        NetworkInfo netInfo = null;
+
+        if(connectivityManager != null){
+            netInfo = connectivityManager.getActiveNetworkInfo();
+        }
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 

@@ -8,17 +8,17 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by Ricardo Bravo on 4/03/18.
  */
 
-public class DatabaseHandler extends SQLiteOpenHelper {
+class DatabaseHandler extends SQLiteOpenHelper {
 
 
     private static DatabaseHandler mInstance = null;
 
-    public DatabaseHandler(Context context){
+    DatabaseHandler(Context context){
         super(context, ConstantDB.DATABASE_NAME, null, ConstantDB.DATABASE_VERSION);
     }
 
 
-    public static DatabaseHandler getInstance(Context context){
+    static DatabaseHandler getInstance(Context context){
         if (mInstance == null) {
             mInstance = new DatabaseHandler(context.getApplicationContext());
         }

@@ -6,7 +6,6 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
 
@@ -46,7 +45,6 @@ public class LoginActivity extends BaseActivity implements LoginRegisterView {
     @BindView(R.id.cb_remember)
     AppCompatCheckBox cbRemember;
     private LoginRegisterPresenter loginRegisterPresenter;
-    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +63,9 @@ public class LoginActivity extends BaseActivity implements LoginRegisterView {
         loginRegisterPresenter.attach(this);
         firebaseAuth = FirebaseAuth.getInstance();
 
-        loginRegisterPresenter.validSession(this, firebaseAuth.getUid());
-
+        if (firebaseAuth.getUid() != null) {
+            loginRegisterPresenter.validSession(this, firebaseAuth.getUid());
+        }
 
     }
 
@@ -119,8 +118,8 @@ public class LoginActivity extends BaseActivity implements LoginRegisterView {
     public void validSession(boolean session) {
         if (session) {
             nextActivity();
-        } else {
-            showSnackBar(llLogin, getString(R.string.message_internet));
+        } else if(!NetworkUtil.isOnline(this)){
+            showInternetMessage();
         }
 
     }
@@ -171,7 +170,7 @@ public class LoginActivity extends BaseActivity implements LoginRegisterView {
 
     }
 
-    public void nextActivity() {
+    void nextActivity() {
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }
@@ -184,6 +183,11 @@ public class LoginActivity extends BaseActivity implements LoginRegisterView {
     @Override
     public void onFailure() {
         showSnackBar(llLogin, getString(R.string.error));
+    }
+
+    @Override
+    public void showInternetMessage() {
+        showSnackBar(llLogin, getString(R.string.message_internet));
     }
 
     @OnClick(R.id.btn_enter)

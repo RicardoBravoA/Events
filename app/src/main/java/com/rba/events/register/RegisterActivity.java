@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.rba.events.R;
 import com.rba.events.base.BaseActivity;
 import com.rba.events.login.LoginRegisterView;
+import com.rba.events.util.NetworkUtil;
 import com.rba.events.util.UiUtil;
 
 import butterknife.BindView;
@@ -138,7 +139,7 @@ public class RegisterActivity extends BaseActivity implements LoginRegisterView 
     @OnEditorAction(R.id.et_password)
     boolean onPasswordEditorAction(int actionId) {
 
-        if(actionId == EditorInfo.IME_ACTION_GO){
+        if (actionId == EditorInfo.IME_ACTION_GO) {
             UiUtil.hideKeyboard(this, etPassword);
             validData();
             return true;
@@ -162,9 +163,19 @@ public class RegisterActivity extends BaseActivity implements LoginRegisterView 
         showSnackBar(llRegister, getString(R.string.error));
     }
 
+    @Override
+    public void showInternetMessage() {
+        showSnackBar(llRegister, getString(R.string.message_internet));
+    }
+
     @OnClick(R.id.btn_enter)
     void onClickLogin() {
-        validData();
+        if (NetworkUtil.isOnline(this)) {
+            validData();
+        } else {
+            showInternetMessage();
+        }
+
     }
 
     @Override
